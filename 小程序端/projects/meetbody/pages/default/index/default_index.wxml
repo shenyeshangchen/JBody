@@ -1,0 +1,102 @@
+<view class="main">
+	<view class="up">
+		<image mode="aspectFill" src="../../../images/home.jpg" />
+	</view>
+	<view class="down">
+		<view class="menu card-project">
+			<view  wx:for="{{newsCateList}}" wx:key="key" bindtap="url"   data-url="../../news/index/news_index?id={{item.id}}" class="item">
+				<view class="item-inner">
+					<view class="img shadow"> 
+                        <image src="../../../images/home/n{{item.id}}.png" />
+					</view>
+					<view class="title">{{item.title}}</view>
+				</view>
+			</view>     
+		</view> 
+
+		<!--guide begin -->
+		<view class="guide">
+			<!--<view class="title"> </view>-->
+			<view class="item">
+				<view class="left" bindtap="url" data-url="../../meet/index/meet_index?id=1">
+					<image src="../../../images/home/1.png" mode="aspectFill" lazy-load="{{true}}" />
+					<view class="line1">私教预约</view>
+					<view class="line2">量身定制，高效蜕变</view>
+					<view class="order shadow">马上预约</view>
+				</view>
+				<view class="right">
+					<view class="line" bindtap="url" data-url="../../meet/index/meet_index?id=2">
+						<image src="../../../images/home/2.png" mode="aspectFill" lazy-load="{{true}}" />
+						<view class="txt1">团课预约</view>
+						<view class="txt2">热血同行，挥洒汗水 </view>
+					</view>
+					<view class="line" bindtap="url" data-url="../../meet/index/meet_index?id=3">
+						<image src="../../../images/home/3.png" mode="aspectFill" lazy-load="{{true}}" />
+						<view class="txt1">场地预约</view>
+						<view class="txt2">专属空间，随心畅享</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!--guide END -->
+
+        <view class="area shadow-project  card-project">
+			<view class="hot-line">
+				<view class="left">
+					<view class="icon-left"></view>推荐教练
+				</view>
+				<view class="right"></view>
+			</view>
+
+			<view wx:if="{{!meetList}}" class="margin-top load loading text-l load-project"></view>
+            <view wx:if="{{meetList.length==0}}" class="margin-top text-center  loading text-l load-project">暂无记录</view>
+
+			<!--横向拖动 Begin-->
+			<view class="scroll-x" wx:if="{{meetList&&meetList.length>0}}">
+				<scroll-view scroll-x="{{true}}" class="comm-list-scroll">
+					<view class="item-scroll"   wx:for="{{meetList}}" wx:key="index" bind:tap="url" data-url="../../meet/detail/meet_detail?id={{item.meetId}}">
+						<image lazy-load="{{true}}" mode="aspectFill" class="loading shadow" src="{{item.meetObj.cover[0]}}"  ></image>
+						<view class="title text-cut1">{{item.meetTitle}}</view>
+					</view>
+				</scroll-view>
+			</view>
+			<!--横向拖动 END-->
+		</view>
+
+
+		<!-- List Begin -->
+		<view wx:if="{{!newsList}}" class="margin-top load loading text-l load-project"></view>
+
+
+		<view wx:else class="down-list  shadow-project card-project">
+            <view class="hot-line">
+				<view class="left">
+					<view class="icon-left"></view>推荐资讯
+				</view>
+				<view class="right"></view>
+			</view>
+
+            <view wx:if="{{newsList.length==0}}" class="margin-top text-center  loading text-l load-project">暂无记录</view>
+			<view class="item"   wx:for="{{newsList}}" wx:key="k" bindtap="url" data-url="../../news/detail/news_detail?id={{item.newsId}}">
+				<view class="left">
+					<view class="line1 content-cut-two">{{item.newsTitle}}</view>
+					<view class="line2">
+						<text><text class="icon-apps margin-right-xxs text-prject"></text>{{item.newsCateName}}</text>
+						<!--<text><text class="icon-attention margin-right-xxs"></text>{{item.cnt}}</text>-->
+					</view>
+				</view>
+				<view class="right">
+					<image class="loading" lazy-load="{{true}}" mode="aspectFill" src="{{item.newsObj.cover[0]}}" />
+				</view>
+			</view>
+		</view>
+
+		<!-- List END -->
+	</view>
+    <view style="height: 100rpx;"></view>
+</view>
+
+<block wx:if="{{skin.IS_SUB}}">
+	<import src="../../tpls/menu_tpl.wxml" />
+	<template is="menuTpl" data="{{curMenu:'default_index',returnHome:false}}" />
+</block>
